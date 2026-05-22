@@ -37,9 +37,9 @@ KSPlayer是一款基于 AVPlayer, FFmpeg  纯Swift的音视频播放器，支持
 ```ruby
 target 'ProjectName' do
     use_frameworks!
-    pod 'KSPlayer',:git => 'https://github.com/kingslay/KSPlayer.git', :branch => 'develop'
-    pod 'FFmpegKit',:git => 'https://github.com/kingslay/FFmpegKit.git', :branch => 'main'
-    pod 'OpenSSL',:git => 'https://github.com/kingslay/FFmpegKit.git', :branch => 'main'
+    pod 'KSPlayer',:git => 'https://github.com/niumeng07/KSPlayer.git', :branch => 'develop'
+    pod 'FFmpegKit',:git => 'https://github.com/niumeng07/FFmpegKit.git', :branch => 'main'
+    pod 'OpenSSL',:git => 'https://github.com/niumeng07/FFmpegKit.git', :branch => 'main'
 end
 ```
 
@@ -47,7 +47,7 @@ end
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/kingslay/KSPlayer.git", .branch("develop"))
+    .package(url: "https://github.com/niumeng07/KSPlayer.git", .branch("develop"))
 ]
 ```
 
@@ -58,7 +58,7 @@ dependencies: [
 ## License
 KSPlayer默认采用 GPL 协议(需开源自己的项目代码)，希望大家能自觉尊重 KSPlayer 项目的授权协议。另外有一个付费版本是采用LGPL协议。(联系我们)
 
-如果由于商业原因，不希望遵守 GPL 协议或 LGPL 协议，那你可以联系我们，经过我们的授权，你可以拥有更加宽松的授权协议。邮箱: kingslay@icloud.com
+如果由于商业原因，不希望遵守 GPL 协议或 LGPL 协议，那你可以联系我们，经过我们的授权，你可以拥有更加宽松的授权协议。
 
 ## 五、使用
 

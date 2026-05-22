@@ -11,8 +11,6 @@ English | [简体中文](./README_CN.md)
 
 If you have a commercial project that requires a custom player, or would like to receive a paid consultation, please email me.
 
-- Email : kingslay@icloud.com
-
 ## License
 KSPlayer defaults to the GPL license (requires open-sourcing your own project code), and we hope everyone will consciously respect the licensing agreement of the KSPlayer project. Additionally, there is a paid version that adopts the LGPL license (contact us).
 
@@ -101,10 +99,10 @@ Make sure to use the latest version **cocoapods 1.10.1+**, which can be installe
 ```ruby
 target 'ProjectName' do
     use_frameworks!
-    pod 'KSPlayer',:git => 'https://github.com/kingslay/KSPlayer.git', :branch => 'main'
-    pod 'DisplayCriteria',:git => 'https://github.com/kingslay/KSPlayer.git', :branch => 'main'
-    pod 'FFmpegKit',:git => 'https://github.com/kingslay/FFmpegKit.git', :branch => 'main'
-    pod 'Libass',:git => 'https://github.com/kingslay/FFmpegKit.git', :branch => 'main'
+    pod 'KSPlayer',:git => 'https://github.com/niumeng07/KSPlayer.git', :branch => 'main'
+    pod 'DisplayCriteria',:git => 'https://github.com/niumeng07/KSPlayer.git', :branch => 'main'
+    pod 'FFmpegKit',:git => 'https://github.com/niumeng07/FFmpegKit.git', :branch => 'main'
+    pod 'Libass',:git => 'https://github.com/niumeng07/FFmpegKit.git', :branch => 'main'
 end
 ```
 
@@ -112,7 +110,7 @@ end
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/kingslay/KSPlayer.git", .branch("main"))
+    .package(url: "https://github.com/niumeng07/KSPlayer.git", .branch("main"))
 ]
 ```
 
@@ -314,7 +312,7 @@ Any contributing and pull requests are warmly welcome. However, before you plan 
 Open-source projects cannot live long without your help. If you find KSPlayer to be useful, please consider supporting this
 project by becoming a sponsor.
 
-Become a sponsor through [GitHub Sponsors](https://github.com/sponsors/kingslay/). :heart:
+Become a sponsor through [GitHub Sponsors](https://github.com/sponsors/niumeng07/). :heart:
 
 Your user icon or company logo shows up this with a link to your home page.
 |Name| App name | App Logo |
