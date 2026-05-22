@@ -11,7 +11,9 @@ public class KSSlider: UXSlider {
     private var tapGesture: UITapGestureRecognizer!
     private var panGesture: UIPanGestureRecognizer!
     weak var delegate: KSSliderDelegate?
-    public var trackHeigt = CGFloat(2)
+    public var trackHeigt = CGFloat(4)
+    /// Visible thumb diameter; kept in sync with thumb image size in VideoPlayerView.
+    public var thumbDiameter = CGFloat(12)
     public var isPlayable = false
     override public init(frame: CGRect) {
         super.init(frame: frame)
@@ -30,15 +32,29 @@ public class KSSlider: UXSlider {
     }
 
     override open func trackRect(forBounds bounds: CGRect) -> CGRect {
-        var customBounds = super.trackRect(forBounds: bounds)
-        customBounds.origin.y -= trackHeigt / 2
-        customBounds.size.height = trackHeigt
-        return customBounds
+        var rect = super.trackRect(forBounds: bounds)
+        rect.origin.y = (bounds.height - trackHeigt) / 2
+        rect.size.height = trackHeigt
+        return rect
     }
 
     override open func thumbRect(forBounds bounds: CGRect, trackRect rect: CGRect, value: Float) -> CGRect {
         let rect = super.thumbRect(forBounds: bounds, trackRect: rect, value: value)
-        return rect.insetBy(dx: -20, dy: -20)
+        let size = thumbDiameter
+        return CGRect(
+            x: rect.midX - size / 2,
+            y: rect.midY - size / 2,
+            width: size,
+            height: size
+        )
+    }
+
+    private func sliderValue(forTouchAt point: CGPoint) -> Float {
+        let track = trackRect(forBounds: bounds)
+        guard track.width > 0 else { return value }
+        let x = point.x - track.minX
+        let ratio = max(0, min(1, x / track.width))
+        return minimumValue + (maximumValue - minimumValue) * Float(ratio)
     }
 
     // MARK: - handle UI slider actions
@@ -68,10 +84,10 @@ public class KSSlider: UXSlider {
         //            return
         //        }
         let touchPoint = sender.location(in: self)
-        let value = (maximumValue - minimumValue) * Float(touchPoint.x / frame.size.width)
-        self.value = value
-        delegate?.slider(value: Double(value), event: .valueChanged)
-        delegate?.slider(value: Double(value), event: .touchUpInside)
+        let newValue = sliderValue(forTouchAt: touchPoint)
+        self.value = newValue
+        delegate?.slider(value: Double(newValue), event: .valueChanged)
+        delegate?.slider(value: Double(newValue), event: .touchUpInside)
     }
 
     @objc private func actionPanGesture(sender: UIPanGestureRecognizer) {
@@ -79,14 +95,14 @@ public class KSSlider: UXSlider {
         //            return
         //        }
         let touchPoint = sender.location(in: self)
-        let value = (maximumValue - minimumValue) * Float(touchPoint.x / frame.size.width)
-        self.value = value
+        let newValue = sliderValue(forTouchAt: touchPoint)
+        self.value = newValue
         if sender.state == .began {
-            delegate?.slider(value: Double(value), event: .touchDown)
+            delegate?.slider(value: Double(newValue), event: .touchDown)
         } else if sender.state == .ended {
-            delegate?.slider(value: Double(value), event: .touchUpInside)
+            delegate?.slider(value: Double(newValue), event: .touchUpInside)
         } else {
-            delegate?.slider(value: Double(value), event: .valueChanged)
+            delegate?.slider(value: Double(newValue), event: .valueChanged)
         }
     }
 }

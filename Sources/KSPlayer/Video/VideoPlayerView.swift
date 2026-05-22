@@ -741,16 +741,13 @@ extension VideoPlayerView {
     }
 
     private func addConstraint() {
-        if #available(macOS 11.0, *) {
-            #if !targetEnvironment(macCatalyst)
-            toolBar.timeSlider.setThumbImage(UIImage(systemName: "circle.fill"), for: .normal)
-            #if os(macOS)
-            toolBar.timeSlider.setThumbImage(UIImage(systemName: "circle.fill"), for: .highlighted)
-            #else
-            toolBar.timeSlider.setThumbImage(UIImage(systemName: "circle.fill", withConfiguration: UIImage.SymbolConfiguration(scale: .large)), for: .highlighted)
-            #endif
-            #endif
-        }
+        #if canImport(UIKit) && !os(tvOS)
+        let thumbDiameter = toolBar.timeSlider.thumbDiameter
+        let thumbImage = Self.makeCircularThumbImage(diameter: thumbDiameter, color: .white)
+        toolBar.timeSlider.setThumbImage(thumbImage, for: .normal)
+        toolBar.timeSlider.setThumbImage(thumbImage, for: .highlighted)
+        toolBar.timeSlider.trackHeigt = 4
+        #endif
         bottomMaskView.addSubview(toolBar.timeSlider)
         toolBar.audioSwitchButton.isHidden = true
         toolBar.videoSwitchButton.isHidden = true
@@ -859,13 +856,24 @@ extension VideoPlayerView {
             toolBar.bottomAnchor.constraint(equalTo: bottomMaskView.safeBottomAnchor),
             toolBar.leadingAnchor.constraint(equalTo: bottomMaskView.safeLeadingAnchor, constant: 10),
             toolBar.trailingAnchor.constraint(equalTo: bottomMaskView.safeTrailingAnchor, constant: -15),
-            toolBar.timeSlider.bottomAnchor.constraint(equalTo: toolBar.topAnchor),
+            toolBar.timeSlider.bottomAnchor.constraint(equalTo: toolBar.topAnchor, constant: -4),
             toolBar.timeSlider.leadingAnchor.constraint(equalTo: bottomMaskView.safeLeadingAnchor, constant: 15),
             toolBar.timeSlider.trailingAnchor.constraint(equalTo: bottomMaskView.safeTrailingAnchor, constant: -15),
-            toolBar.timeSlider.heightAnchor.constraint(equalToConstant: 30),
+            toolBar.timeSlider.heightAnchor.constraint(equalToConstant: 28),
         ])
         #endif
     }
+
+    #if canImport(UIKit) && !os(tvOS)
+    private static func makeCircularThumbImage(diameter: CGFloat, color: UIColor) -> UIImage {
+        let size = CGSize(width: diameter, height: diameter)
+        let renderer = UIGraphicsImageRenderer(size: size)
+        return renderer.image { context in
+            color.setFill()
+            context.cgContext.fillEllipse(in: CGRect(origin: .zero, size: size))
+        }
+    }
+    #endif
 
     private func preferredStyle() -> UIAlertController.Style {
         #if canImport(UIKit)
