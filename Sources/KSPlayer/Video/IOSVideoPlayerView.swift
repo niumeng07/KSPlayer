@@ -59,7 +59,7 @@ open class IOSVideoPlayerView: VideoPlayerView {
             landscapeButton.setImage(UIImage(systemName: "arrow.down.right.and.arrow.up.left"), for: .selected)
         }
         backButton.tag = PlayerButtonType.back.rawValue
-        backButton.setImage(UIImage(systemName: "chevron.left"), for: .normal)
+        backButton.setImage(UIImage(systemName: "xmark"), for: .normal)
         backButton.addTarget(self, action: #selector(onButtonPressed(_:)), for: .touchUpInside)
         backButton.tintColor = .white
         navigationBar.insertArrangedSubview(backButton, at: 0)
